@@ -26,6 +26,7 @@ function itemClick(event) {
     if(square[item] === ``){
         square[item] = player;
         renderSquare();
+        togglePlayer();
     }
 }
 
@@ -34,9 +35,9 @@ function reset(){
     let random = Math.floor(Math.random()* 2);
     player = (random === 0) ? `x`: `o`;
 
-    // for(let i in square){
-    //     square[i] = ``;
-    // }
+    for(let i in square){
+        square[i] = ``;
+    }
     playing = true;
     renderSquare();
     renderInfo();
@@ -47,10 +48,37 @@ function renderSquare(){
         let item = document.querySelector(`div[data-item=${i}]`);
         item.innerHTML = square[i];
         }
-
+        checkgame();
 }
 
 function renderInfo(){
     document.querySelector(`.vez`).innerHTML = player;
     document.querySelector(`.resultado`).innerHTML =warning;
+}
+
+function togglePlayer(){
+    player = (player === `x`) ? `o` : `x`;
+    renderInfo();
+    // if(player === `x`){
+    //     player = `o`;
+    // } else {
+    //     player = `x`;
+    // }
+}
+
+function checkgame(){
+    if(checkWinnerFor(`x`)){
+        warning = `O "x" venceu`;
+        playing = false;
+    }else if(checkWinnerFor(`o`)){
+        warning = `O "o" venceu`;
+        playing = false;
+    }else if(isFull()){
+        warning = `Deu empate`;
+        playing = false;
+    }
+}
+
+function checkWinnerFor(player){
+    let pos = []
 }
